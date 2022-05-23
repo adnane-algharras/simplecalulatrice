@@ -28,7 +28,43 @@ var Calculator = {
 
   
 
-  
+  backSpace: function backSpace() {
+    this.currentInput = '';
+    this.operationToBeApplied = '';
+    this.result = 0;
+    this.inputDigits = 0;
+    this.decimalMark = false;
+    this.updateDisplay();
+  },
+
+  calculate: function calculate() {
+    var tempResult = 0,
+        result = parseFloat(this.result),
+        currentInput = parseFloat(this.currentInput);
+    // Can't use eval here since this will be a packaged app.
+    switch (this.operationToBeApplied) {
+      case '+':
+        tempResult = result + currentInput;
+        break;
+      case '-':
+        tempResult = result - currentInput;
+        break;
+      case '*':
+        tempResult = result * currentInput;
+        break;
+    }
+    this.result = parseFloat(tempResult.toPrecision(this.significantDigits));
+    if (tempResult >  this.maxDisplayableValue ||
+        tempResult < -this.maxDisplayableValue) {
+      this.result = this.result.toExponential();
+    }
+
+    this.currentInput = '';
+    this.operationToBeApplied = '';
+    this.inputDigits = 0;
+    this.decimalMark = false;
+    this.updateDisplay();
+  },
 
   init: function init() {
     this.display.style.lineHeight = + this.display.offsetHeight + "px";
