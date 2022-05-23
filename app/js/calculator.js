@@ -26,7 +26,63 @@ var Calculator = {
     this.display.style.fontSize = 5.5 * scaleFactor + 'rem';
   },
 
-  
+  appendDigit: function appendDigit(value) {
+    if (this.inputDigits + 1 > this.significantDigits ||
+        this.currentInput === '0' && value === '0') {
+      return;
+    }
+    if (value === '.') {
+      if (this.decimalMark) {
+        return;
+      } else {
+        this.decimalMark = true;
+      }
+      if (!this.currentInput) {
+        this.currentInput += '0';
+      }
+    } else {
+      if (this.currentInput === '0' && value !== '0') {
+        this.currentInput = '';
+      } else {
+        ++this.inputDigits;
+      }
+    }
+    if (!this.operationToBeApplied) {
+      this.result = 0;
+    }
+    this.currentInput += value;
+    this.updateDisplay();
+  },
+
+  appendOperator: function appendOperator(value) {
+    this.decimalMark = false;
+    if (this.operationToBeApplied && this.currentInput) {
+      this.calculate();
+    } else if (!this.result) {
+      this.result = parseFloat(this.currentInput);
+      this.currentInput = '';
+    }
+    switch (value) {
+      case '+':
+        this.operationToBeApplied = '+';
+        break;
+      case '-':
+        if (this.currentInput || this.result) {
+          this.operationToBeApplied = '-';
+        } else {
+          this.currentInput += '-';
+          this.updateDisplay();
+        }
+        break;
+      case '×':
+        this.operationToBeApplied = '*';
+        break;
+      case '÷':
+        this.operationToBeApplied = '/';
+        break;
+    }
+    this.inputDigits = 0;
+  },
 
   backSpace: function backSpace() {
     this.currentInput = '';
@@ -51,6 +107,13 @@ var Calculator = {
         break;
       case '*':
         tempResult = result * currentInput;
+        break;
+      case '/':
+        if (currentInput == 0) {
+            tempResult = NaN;
+        } else {
+            tempResult = result / currentInput;
+        }
         break;
     }
     this.result = parseFloat(tempResult.toPrecision(this.significantDigits));
