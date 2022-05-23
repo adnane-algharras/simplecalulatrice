@@ -295,7 +295,7 @@ $(function () {
                .press('-')
                .press(1).press(0).press('.').press(9).press(9)
                .press('=')
-               .end.should.equal('989.01');
+               .end.should.equal('989');
       });
 
       it('Un ajout d un addend négatif à virgule flottante doit être traité ' +
