@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Calculator Automated Test Suite</title>
+  <link rel="stylesheet" href="vendor/mocha.css" type="text/css"/>
+  <script src="vendor/jquery.min.js"></script>
+  <script src="vendor/chai.js"></script>
+  <script src="vendor/mocha.js"></script>
+  <!-- MOCK DATA -->
+  <script src="mock.js"></script>
+  <!-- SCRIPT UNDER TEST -->
+  <!-- change this to test local modifications -->
+  <script src="../app/js/calculator.js" defer></script>
+  <!-- TESTS -->
+  <script src="tests.js" defer></script>
+</head>
+<body>
+  <p>
+    Tous les tests qui échouent seront en texte rouge avec un x rouge et les tests qui réussissent auront une coche verte. Vous pouvez cliquer sur le texte pour n'importe quel cas pour voir quel code de test est exécuté.
+  </p>
+  <h4>
+    Terminologie
+  </h4>
+  <p>
+    Nombre + Nombre = Addition<br/>
+    Nombre - Nombre = Substraction<br/>
+    Nombre * Nombre = Produit<br/>
+    Nombre / Nombre = Division<br/>
+  </p>
+  <h1>Suite de test de calculatrice</h1>
+  <div id="mocha"></div>
+  <div id="display" hidden><div></div></div>
+</body>
+</html>
